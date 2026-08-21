@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 Puzzle Game</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    text-align:center;
+}
+
+h1{
+    color:#333;
+}
+
+#board{
+    display:grid;
+    grid-template-columns:repeat(4,80px);
+    grid-template-rows:repeat(4,80px);
+    gap:5px;
+    margin:20px auto;
+}
+
+button{
+    width:80px;
+    height:80px;
+    font-size:28px;
+    font-weight:bold;
+    border:none;
+    background:#4CAF50;
+    color:white;
+    cursor:pointer;
+    border-radius:8px;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#45a049;
+}
+
+.empty{
+    background:#ddd;
+    cursor:default;
+}
+
+#status{
+    font-size:22px;
+    color:green;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+#shuffle{
+    width:180px;
+    height:45px;
+    font-size:18px;
+    background:#2196F3;
+}
+
+#shuffle:hover{
+    background:#1976D2;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>15 Puzzle Game</h1>
+
+<div id="board"></div>
+
+<button id="shuffle">Shuffle</button>
+
+<div id="status"></div>
+
+</div>
+
+<script>
+
+let board=[
+1,2,3,4,
+5,6,7,8,
+9,10,11,12,
+13,14,15,0
+];
+
+const boardDiv=document.getElementById("board");
+
+function drawBoard(){
+
+boardDiv.innerHTML="";
+
+board.forEach((value,index)=>{
+
+const btn=document.createElement("button");
+
+if(value===0){
+btn.classList.add("empty");
+btn.textContent="";
+}else{
+btn.textContent=value;
+btn.onclick=()=>move(index);
+}
+
+boardDiv.appendChild(btn);
+
+});
+
+checkWin();
+
+}
+
+function move(index){
+
+let empty=board.indexOf(0);
+
+let row=Math.floor(index/4);
+let col=index%4;
+
+let erow=Math.floor(empty/4);
+let ecol=empty%4;
+
+if(
+(row===erow && Math.abs(col-ecol)===1) ||
+(col===ecol && Math.abs(row-erow)===1)
+){
+[board[index],board[empty]]=[board[empty],board[index]];
+drawBoard();
+}
+
+}
+
+function shuffle(){
+
+for(let i=0;i<1000;i++){
+
+let empty=board.indexOf(0);
+
+let row=Math.floor(empty/4);
+let col=empty%4;
+
+let moves=[];
+
+if(row>0) moves.push(empty-4);
+if(row<3) moves.push(empty+4);
+if(col>0) moves.push(empty-1);
+if(col<3) moves.push(empty+1);
+
+let randomMove=moves[Math.floor(Math.random()*moves.length)];
+
+[board[empty],board[randomMove]]=[board[randomMove],board[empty]];
+
+}
+
+drawBoard();
+
+document.getElementById("status").textContent="";
+
+}
+
+function checkWin(){
+
+for(let i=0;i<15;i++){
+
+if(board[i]!==i+1){
+return;
+}
+
+}
+
+if(board[15]===0){
+document.getElementById("status").textContent="🎉 Congratulations! You solved the puzzle!";
+}
+
+}
+
+document.getElementById("shuffle").onclick=shuffle;
+
+drawBoard();
+
+</script>
+
+</body>
+</html>

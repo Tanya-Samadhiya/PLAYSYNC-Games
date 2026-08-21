@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,.3);
+            text-align:center;
+        }
+
+        h2{
+            margin-bottom:20px;
+            color:#333;
+        }
+
+        .board{
+            display:grid;
+            grid-template-columns:repeat(3,80px);
+            gap:10px;
+            justify-content:center;
+            margin:20px auto;
+        }
+
+        .btn{
+            width:80px;
+            height:80px;
+            font-size:35px;
+            font-weight:bold;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            background:#f2f2f2;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#dcdcdc;
+            transform:scale(1.05);
+        }
+
+        .reset{
+            margin-top:15px;
+            padding:12px 25px;
+            font-size:18px;
+            border:none;
+            border-radius:8px;
+            background:#667eea;
+            color:white;
+            cursor:pointer;
+        }
+
+        .reset:hover{
+            background:#4f63d2;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Tic Tac Toe</h2>
+
+<div class="board">
+    <input type="button" class="btn" onclick="play(this)" id="btn1">
+    <input type="button" class="btn" onclick="play(this)" id="btn2">
+    <input type="button" class="btn" onclick="play(this)" id="btn3">
+
+    <input type="button" class="btn" onclick="play(this)" id="btn4">
+    <input type="button" class="btn" onclick="play(this)" id="btn5">
+    <input type="button" class="btn" onclick="play(this)" id="btn6">
+
+    <input type="button" class="btn" onclick="play(this)" id="btn7">
+    <input type="button" class="btn" onclick="play(this)" id="btn8">
+    <input type="button" class="btn" onclick="play(this)" id="btn9">
+</div>
+
+<input type="button" value="Reset Game" class="reset" onclick="resetGame()">
+
+</div>
+
+<script>
+
+var chance = "X";
+
+var btn1 = document.getElementById("btn1");
+var btn2 = document.getElementById("btn2");
+var btn3 = document.getElementById("btn3");
+var btn4 = document.getElementById("btn4");
+var btn5 = document.getElementById("btn5");
+var btn6 = document.getElementById("btn6");
+var btn7 = document.getElementById("btn7");
+var btn8 = document.getElementById("btn8");
+var btn9 = document.getElementById("btn9");
+
+chance="X";
+
+function play(btn)
+{
+    if(btn.value!="X" && btn.value!="O")
+    {
+        btn.value=chance;
+
+        if(chance=="X")
+        {
+            chance="O";
+        }
+        else
+        {
+            chance="X";
+        }
+
+        checkwin();
+        checkTie();
+    }
+}
+
+function checkwin()
+{
+    if(btn1.value==btn2.value && btn2.value==btn3.value && btn1.value!="")
+    {
+        alert(btn1.value+" WIN");
+    }
+
+    if(btn4.value==btn5.value && btn5.value==btn6.value && btn4.value!="")
+    {
+        alert(btn4.value+" WIN");
+    }
+
+    if(btn7.value==btn8.value && btn8.value==btn9.value && btn7.value!="")
+    {
+        alert(btn7.value+" WIN");
+    }
+
+    if(btn1.value==btn4.value && btn4.value==btn7.value && btn1.value!="")
+    {
+        alert(btn1.value+" WIN");
+    }
+
+    if(btn2.value==btn5.value && btn5.value==btn8.value && btn2.value!="")
+    {
+        alert(btn2.value+" WIN");
+    }
+
+    if(btn3.value==btn6.value && btn6.value==btn9.value && btn3.value!="")
+    {
+        alert(btn3.value+" WIN");
+    }
+
+    if(btn1.value==btn5.value && btn5.value==btn9.value && btn1.value!="")
+    {
+        alert(btn1.value+" WIN");
+    }
+
+    if(btn3.value==btn5.value && btn5.value==btn7.value && btn3.value!="")
+    {
+        alert(btn3.value+" WIN");
+    }
+}
+
+function checkTie()
+{
+    if(
+        btn1.value!="" &&
+        btn2.value!="" &&
+        btn3.value!="" &&
+        btn4.value!="" &&
+        btn5.value!="" &&
+        btn6.value!="" &&
+        btn7.value!="" &&
+        btn8.value!="" &&
+        btn9.value!=""
+    )
+    {
+        alert("Game TIE!");
+    }
+}
+
+function resetGame()
+{
+    btn1.value="";
+    btn2.value="";
+    btn3.value="";
+    btn4.value="";
+    btn5.value="";
+    btn6.value="";
+    btn7.value="";
+    btn8.value="";
+    btn9.value="";
+
+    chance="X";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jumbled Letters Game</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+            background-color: lightyellow;
+        }
+
+        .box {
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px yellow;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+            margin: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Jumbled Letters Game</h2>
+
+    <h3 id="jumble"></h3>
+
+    <input type="text" id="answer" placeholder="Guess the word">
+    <br>
+
+    <button onclick="checkAnswer()">Submit</button>
+    <button onclick="newWord()">New Word</button>
+
+    <p id="result"></p>
+</div>
+<br>
+<br>
+<h2 id="score">TOTAL SCORE : 0</h2>
+<script>
+const words = ["javascript", "computer", "school", "student", "orange", "banana", "teacher", "keyboard"];
+
+let currentWord = "";
+
+function shuffle(word) {
+    let arr = word.split("");
+
+    for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    return arr.join("");
+}
+
+function newWord() {
+    currentWord = words[Math.floor(Math.random() * words.length)];
+
+    let jumbled = shuffle(currentWord);
+
+    while (jumbled === currentWord) {
+        jumbled = shuffle(currentWord);
+    }
+
+    document.getElementById("jumble").innerHTML = jumbled;
+    document.getElementById("answer").value = "";
+    document.getElementById("result").innerHTML = "";
+}
+let score=0;
+function checkAnswer() {
+    let guess = document.getElementById("answer").value.toLowerCase();
+    
+    if (guess === currentWord) {
+        score++;
+        document.getElementById("result").innerHTML = "✅ Correct!";
+        document.getElementById("score").innerHTML = "Total Score = "+score;
+    } else {
+        document.getElementById("result").innerHTML =
+            "❌ Wrong! The answer was <b>" + currentWord + "</b>";
+    }
+}
+
+newWord();
+</script>
+
+</body>
+</html>
